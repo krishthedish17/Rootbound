@@ -1,0 +1,79 @@
+[gd_scene load_steps=11 format=3 uid="uid://cgmcmnir1jdi7"]
+
+[ext_resource type="Script" uid="uid://muluo8f5hk3a" path="res://Gameplay/Entitites/player.gd" id="1_0lapi"]
+[ext_resource type="Script" uid="uid://bpc0an2yqf4r4" path="res://Gameplay/Entitites/player_control.gd" id="1_a6buw"]
+[ext_resource type="Texture2D" uid="uid://kqqxl20wwdd" path="res://art/tree-Sheet.png" id="3_a6buw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_74qtj"]
+atlas = ExtResource("3_a6buw")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pbq0j"]
+atlas = ExtResource("3_a6buw")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mpro3"]
+atlas = ExtResource("3_a6buw")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8oiir"]
+atlas = ExtResource("3_a6buw")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qtqgw"]
+atlas = ExtResource("3_a6buw")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a6buw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_74qtj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pbq0j")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mpro3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8oiir")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qtqgw")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_74qtj"]
+radius = 63.0079
+
+[node name="main" type="Node2D" groups=["player"]]
+script = ExtResource("1_a6buw")
+
+[node name="body" type="CharacterBody2D" parent="." groups=["player"]]
+collision_mask = 9
+script = ExtResource("1_0lapi")
+
+[node name="sprite" type="AnimatedSprite2D" parent="body"]
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_a6buw")
+animation = &"idle"
+
+[node name="Muzzle" type="Marker2D" parent="body/sprite"]
+position = Vector2(11.25, 7.5)
+
+[node name="hitbox" type="CollisionShape2D" parent="body"]
+shape = SubResource("CircleShape2D_74qtj")
+disabled = true
+
+[node name="Cooldown" type="Timer" parent="body"]
+
+[connection signal="timeout" from="body/Cooldown" to="body" method="_on_cooldown_timeout"]

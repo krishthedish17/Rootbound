@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://bjaofnmk7swlx"]
+
+[ext_resource type="Script" uid="uid://cyedc2xli6n5r" path="res://Gameplay/Projectiles/snipeProjectile.gd" id="1_cee3c"]
+[ext_resource type="Texture2D" uid="uid://dsu8q3oqeoi3i" path="res://art/snipe bullet.png" id="2_cee3c"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w8n15"]
+radius = 30.0167
+
+[node name="snipeProjectile" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 8
+script = ExtResource("1_cee3c")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(7, 7)
+texture = ExtResource("2_cee3c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_w8n15")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_w8n15")
+
+[node name="Life" type="Timer" parent="."]
+wait_time = 4.0
+autostart = true
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_bullet_hit"]
+[connection signal="timeout" from="Life" to="." method="_on_life_timeout"]

@@ -1,0 +1,135 @@
+[gd_scene load_steps=17 format=3 uid="uid://bijpr8ude4f44"]
+
+[ext_resource type="Script" uid="uid://cd4fdwr37h1tv" path="res://Gameplay/Entitites/enemyBrute.gd" id="1_lau4k"]
+[ext_resource type="Texture2D" uid="uid://2r8fk8rsttj2" path="res://art/heavy-Sheet.png" id="2_lau4k"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xjo6w"]
+radius = 60.0333
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mohob"]
+atlas = ExtResource("2_lau4k")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ini2p"]
+atlas = ExtResource("2_lau4k")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ut7v3"]
+atlas = ExtResource("2_lau4k")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b5463"]
+atlas = ExtResource("2_lau4k")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k18vm"]
+atlas = ExtResource("2_lau4k")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ukn6o"]
+atlas = ExtResource("2_lau4k")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k2kjg"]
+atlas = ExtResource("2_lau4k")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_au5q7"]
+atlas = ExtResource("2_lau4k")
+region = Rect2(224, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iwyv1"]
+atlas = ExtResource("2_lau4k")
+region = Rect2(256, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ffbgs"]
+atlas = ExtResource("2_lau4k")
+region = Rect2(288, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8416p"]
+atlas = ExtResource("2_lau4k")
+region = Rect2(320, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tf2br"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mohob")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ini2p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ut7v3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b5463")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k18vm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ukn6o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k2kjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_au5q7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iwyv1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ffbgs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8416p")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_olufp"]
+radius = 76.2365
+
+[node name="EnemyBrute" type="Node2D"]
+scale = Vector2(3, 3)
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["enemies"]]
+scale = Vector2(0.4, 0.4)
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("1_lau4k")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("CircleShape2D_xjo6w")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+z_index = -3
+scale = Vector2(6, 6)
+sprite_frames = SubResource("SpriteFrames_tf2br")
+autoplay = "default"
+
+[node name="Area2D" type="Area2D" parent="CharacterBody2D" groups=["core_detector"]]
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
+shape = SubResource("CircleShape2D_olufp")
+
+[node name="Area2D2" type="Area2D" parent="CharacterBody2D"]
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D2"]
+shape = SubResource("CircleShape2D_olufp")
+
+[node name="feet" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(0, 167.5)
+
+[connection signal="area_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_on_sanctuary_entered"]
+[connection signal="body_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_on_bullet_entered"]
+[connection signal="area_entered" from="CharacterBody2D/Area2D2" to="CharacterBody2D" method="_on_hit"]
+[connection signal="body_entered" from="CharacterBody2D/Area2D2" to="CharacterBody2D" method="_on_bullet_entered"]

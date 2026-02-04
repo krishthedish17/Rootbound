@@ -1,0 +1,71 @@
+[gd_scene load_steps=8 format=3 uid="uid://cpgaqx1ok008y"]
+
+[ext_resource type="Script" uid="uid://b202epii00d1m" path="res://Gameplay/Entitites/enemyFast.gd" id="1_jy8ei"]
+[ext_resource type="Texture2D" uid="uid://dqaih4sw4ixuy" path="res://art/mini enemy-Sheet.png" id="2_jy8ei"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xjo6w"]
+radius = 60.0333
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bfqrs"]
+atlas = ExtResource("2_jy8ei")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ducag"]
+atlas = ExtResource("2_jy8ei")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tf2br"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bfqrs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ducag")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_olufp"]
+radius = 76.2365
+
+[node name="EnemyFast" type="Node2D"]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." groups=["enemies"]]
+scale = Vector2(0.4, 0.4)
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("1_jy8ei")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("CircleShape2D_xjo6w")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
+position = Vector2(5, -5)
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_tf2br")
+autoplay = "default"
+
+[node name="Area2D" type="Area2D" parent="CharacterBody2D" groups=["core_detector"]]
+collision_layer = 8
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D"]
+shape = SubResource("CircleShape2D_olufp")
+
+[node name="Area2D2" type="Area2D" parent="CharacterBody2D"]
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Area2D2"]
+shape = SubResource("CircleShape2D_olufp")
+
+[node name="feet" type="Node2D" parent="CharacterBody2D"]
+position = Vector2(-2.5, 85)
+
+[connection signal="area_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_on_sanctuary_entered"]
+[connection signal="body_entered" from="CharacterBody2D/Area2D" to="CharacterBody2D" method="_on_bullet_entered"]
+[connection signal="area_entered" from="CharacterBody2D/Area2D2" to="CharacterBody2D" method="_on_hit"]
+[connection signal="body_entered" from="CharacterBody2D/Area2D2" to="CharacterBody2D" method="_on_bullet_entered"]

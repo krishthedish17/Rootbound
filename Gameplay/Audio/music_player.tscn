@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://b1tuyvpbs154m"]
+
+[ext_resource type="AudioStream" uid="uid://df3h4fewtyfu6" path="res://art/wood.wav" id="1_ilblv"]
+
+[node name="Music player" type="Node2D"]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+process_mode = 3
+stream = ExtResource("1_ilblv")
+volume_db = -10.0
+autoplay = true
+bus = &"Music"

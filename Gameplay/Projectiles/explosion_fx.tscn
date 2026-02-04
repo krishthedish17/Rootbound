@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://o46nh0qrq1op"]
+
+[ext_resource type="Script" uid="uid://bout1lj17bah6" path="res://explosion_fx.gd" id="1_ds2ut"]
+[ext_resource type="Texture2D" uid="uid://cs2cl4i2y60n0" path="res://art/explosion fx-Sheet.png" id="2_ds2ut"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_okdv3"]
+atlas = ExtResource("2_ds2ut")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v4yf6"]
+atlas = ExtResource("2_ds2ut")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5fo82"]
+atlas = ExtResource("2_ds2ut")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wyylr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_okdv3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v4yf6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5fo82")
+}],
+"loop": false,
+"name": &"boom",
+"speed": 15.0
+}]
+
+[node name="ExplosionFX" type="Node2D"]
+script = ExtResource("1_ds2ut")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(10, 10)
+sprite_frames = SubResource("SpriteFrames_wyylr")
+animation = &"boom"
+frame = 2
+frame_progress = 1.0
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_anim_animation_finished"]

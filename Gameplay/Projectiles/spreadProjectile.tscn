@@ -1,0 +1,34 @@
+[gd_scene load_steps=4 format=3 uid="uid://bktpkso63e7ex"]
+
+[ext_resource type="Script" uid="uid://codgyxc3fwsvy" path="res://Gameplay/Projectiles/spreadProjectile.gd" id="1_qsh2t"]
+[ext_resource type="Texture2D" uid="uid://sr8whh7gjp7r" path="res://art/spray bullet.png" id="2_qsh2t"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w8n15"]
+radius = 30.0167
+
+[node name="spreadProjectile" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 8
+script = ExtResource("1_qsh2t")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(7, 7)
+texture = ExtResource("2_qsh2t")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_w8n15")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_w8n15")
+
+[node name="Life" type="Timer" parent="."]
+wait_time = 1.6
+autostart = true
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_bullet_hit"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="Life" to="." method="_on_life_timeout"]

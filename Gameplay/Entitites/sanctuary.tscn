@@ -1,0 +1,124 @@
+[gd_scene load_steps=14 format=3 uid="uid://ccapbyqy75cye"]
+
+[ext_resource type="Script" uid="uid://38ksqsiotjyk" path="res://Gameplay/Entitites/sanctuary.gd" id="1_xnuei"]
+[ext_resource type="Texture2D" uid="uid://sd181m3ouyv0" path="res://art/sanctuary-Sheet.png" id="2_xnuei"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vvwq3"]
+radius = 33.1361
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ilifn"]
+atlas = ExtResource("2_xnuei")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vvwq3"]
+atlas = ExtResource("2_xnuei")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mw1g6"]
+atlas = ExtResource("2_xnuei")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_psh2a"]
+atlas = ExtResource("2_xnuei")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2qtue"]
+atlas = ExtResource("2_xnuei")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cc3yn"]
+atlas = ExtResource("2_xnuei")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mw1g6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ilifn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vvwq3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mw1g6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_psh2a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2qtue")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cc3yn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xnuei"]
+radius = 44.2832
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xnuei"]
+size = Vector2(295, 235)
+
+[sub_resource type="Theme" id="Theme_xnuei"]
+
+[node name="sanctuary" type="StaticBody2D" groups=["sanctuary"]]
+collision_layer = 4
+collision_mask = 8
+script = ExtResource("1_xnuei")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+shape = SubResource("CircleShape2D_vvwq3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = -10
+position = Vector2(1, -25)
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_mw1g6")
+frame = 3
+frame_progress = 0.859255
+
+[node name="Area2D" type="Area2D" parent="." groups=["sanctuary"]]
+collision_layer = 4
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_xnuei")
+
+[node name="Label" type="Label" parent="."]
+visible = false
+offset_left = -47.0
+offset_top = -153.0
+offset_right = 51.0
+offset_bottom = -130.0
+text = "HEALTH: 100"
+
+[node name="aura" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="aura"]
+position = Vector2(3.5, 0)
+shape = SubResource("RectangleShape2D_xnuei")
+
+[node name="AuraRing" type="Line2D" parent="."]
+visible = false
+position = Vector2(-146, -121)
+points = PackedVector2Array(0, 0, 0, 240, 300, 240, 300, 0)
+closed = true
+default_color = Color(0, 1, 0, 1)
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+modulate = Color(0, 1, 0, 1)
+offset_left = -50.0
+offset_top = -127.0
+offset_right = 50.0
+offset_bottom = -100.0
+theme = SubResource("Theme_xnuei")
+value = 100.0
+show_percentage = false
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_sanctuary_entered"]
